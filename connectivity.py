@@ -20,7 +20,7 @@ def main ():
 		if check_connectivity () == False:
 			print ('Internet is down... killing OpenVPN process.')
 			# killall openvpn
-			proc = subprocess.Popen(['sudo' 'killall' 'openvpn'])
+			proc = subprocess.Popen(['sudo', 'killall', 'openvpn'])
 			print ('Restarting the OpenVPN process...')
 			# Restart OpenVPN client
 			proc = subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
