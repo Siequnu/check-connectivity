@@ -16,10 +16,6 @@ def check_connectivity (host="8.8.8.8", port=53, timeout=3):
 		return False
 
 def main ():
-	# Start OpenVPN
-	proc = subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
-							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
-							 '/etc/openvpn/auth.txt'], stdout=subprocess.PIPE)
 	while True:
 		if check_connectivity () == False:
 			print ('Internet is down... killing OpenVPN process.')
