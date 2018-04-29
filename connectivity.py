@@ -22,15 +22,17 @@ def main ():
 							 '/etc/openvpn/auth.txt'], stdout=subprocess.PIPE)
 	while True:
 		if check_connectivity () == False:
-			print ('Internet is down')
+			print ('Internet is down... killing OpenVPN process.')
 			# killall openvpn
-			proc = subprocess.Popen(['killall openvpn'])
+			proc = subprocess.Popen(['sudo' 'killall' 'openvpn'])
+			print ('Restarting the OpenVPN process...')
 			# Restart OpenVPN client
 			proc = subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
 							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
 							 '/etc/openvpn/auth.txt'], stdout=subprocess.PIPE)
+			print ('OpenVPN restarted successfully!')
 		else:
-			print ('Internet is up!')
+			print ('Internet is up.')
 		time.sleep (10)
 
 main ()
