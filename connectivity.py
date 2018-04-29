@@ -1,5 +1,6 @@
 import socket
 import subprocess
+import time
 
 def check_connectivity (host="8.8.8.8", port=53, timeout=3):
 	"""
@@ -10,10 +11,8 @@ def check_connectivity (host="8.8.8.8", port=53, timeout=3):
 	try:
 		socket.setdefaulttimeout(timeout)
 		socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-		print ('Internet up!')
 		return True
 	except Exception as ex:
-		print ('Internet down!')
 		return False
 
 def main ():
@@ -32,6 +31,6 @@ def main ():
 							 '/etc/openvpn/auth.txt'], stdout=subprocess.PIPE)
 		else:
 			print ('Internet is up!')
-		sleep (10)
+		time.sleep (10)
 
-
+main ()
