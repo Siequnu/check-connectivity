@@ -17,14 +17,17 @@ def main ():
 			print ('Internet is down... killing any existing OpenVPN process.')
 			# killall OpenVPN
 			proc = subprocess.Popen(['sudo', 'killall', 'openvpn'])
+			time.sleep(10)
+			print (str(proc))
 			print ('Restarting the OpenVPN process...')
 			# Restart OpenVPN client
 			proc = subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
 							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
-							 '/etc/openvpn/auth.txt'], stdout=subprocess.PIPE)
+							 '/etc/openvpn/auth.txt'])
+			print (str(proc))
 			print ('OpenVPN restarted successfully!')
 		else:
 			print ('Internet is up.')
-		time.sleep (600)
+		time.sleep (20)
 
 main ()
