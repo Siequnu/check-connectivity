@@ -1,25 +1,21 @@
-import socket
 import subprocess
+from subprocess import call, PIPE, STDOUT
+import shlex
 import time
 
-def check_connectivity (host="8.8.8.8", port=53, timeout=3):
-	"""
-	Host: 8.8.8.8 (google-public-dns-a.google.com)
-	OpenPort: 53/tcp
-	Service: domain (DNS/TCP)
-	"""
-	try:
-		socket.setdefaulttimeout(timeout)
-		socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-		return True
-	except Exception as ex:
-		return False
+def get_return_code (cmd, stderr=STDOUT):
+	args = shlex.split(cmd)
+	return call(args, stdout=PIPE, stderr=stderr)
+	
+def check_connectivity ():
+	cmd = 'ping -c 1 8.8.8.8'
+	return get_return_code(cmd) == 0
 
 def main ():
 	while True:
 		if check_connectivity () == False:
-			print ('Internet is down... killing OpenVPN process.')
-			# killall openvpn
+			print ('Internet is down... killing any existing OpenVPN process.')
+			# killall OpenVPN
 			proc = subprocess.Popen(['sudo', 'killall', 'openvpn'])
 			print ('Restarting the OpenVPN process...')
 			# Restart OpenVPN client
@@ -29,6 +25,6 @@ def main ():
 			print ('OpenVPN restarted successfully!')
 		else:
 			print ('Internet is up.')
-		time.sleep (10)
+		time.sleep (600)
 
 main ()
