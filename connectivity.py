@@ -1,3 +1,18 @@
+"""OpenVPN Connectivity Manager.
+
+Usage:
+  connectivity.py <openvpn-executable> <openvpn-config> <openvpn-authuserpass> [--s <sleep-time>]
+  connectivity.py (-h | --help)
+  connectivity.py --version
+
+Options:
+  -h --help     Show this screen.
+  --s           Sleep time in seconds [default: 20].
+  --version     Show version.
+
+"""
+from docopt import docopt
+
 import subprocess
 from subprocess import call, PIPE, STDOUT
 import shlex
@@ -20,7 +35,7 @@ def check_connectivity ():
 	return get_return_code(cmd) == 0
 
 # Main entrance to program
-def main (sleep_time_secs = 20):
+def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_secs = 20):
 	global LAST_VPN_RESTART
 	
 	while True:
@@ -33,9 +48,9 @@ def main (sleep_time_secs = 20):
 			
 			# Restart OpenVPN client
 			print colored ('Restarting the OpenVPN process...', 'yellow')
-			subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
-							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
-							 '/etc/openvpn/auth.txt'])
+			subprocess.Popen(['sudo',openvpn_executable,'--config',
+							 openvpn_config, '--auth-user-pass',
+							 openvpn_authuserpass])
 			time.sleep (60)
 			
 			# Check restart was successful
@@ -51,13 +66,18 @@ def main (sleep_time_secs = 20):
 				print colored ('Last VPN restart was ' + str(LAST_VPN_RESTART.humanize()) + ', at: ' + str(LAST_VPN_RESTART.format('YYYY-MM-DD HH:mm:ss')), 'yellow')
 		time.sleep (sleep_time_secs)
 
-# Main program start
-print colored ('Starting connectivity manager...', 'yellow')
 
-# Get sleep time argument, if present in arguments
-if len(sys.argv) > 1:
-	sleep_time_secs = sys.argv[1]
+# Main program start
+arguments = docopt(__doc__, version='OpenVPN Connectivity Manager 1.0')
+print colored ('Starting OpenVPN Connectivity Manager...', 'yellow')
+
+# Assign arguments
+openvpn_executable = arguments['<openvpn-executable>']
+openvpn_config = arguments['<openvpn-config>']
+openvpn_authuserpass = arguments['<openvpn-authuserpass>']
+if '<sleep-time>' in arguments:
+	sleep_time_secs = arguments['<sleep-time>']
 	print colored ('Setting sleep time as ' + str(sleep_time_secs), 'yellow')
-	main (int(sleep_time_secs))
+	main (openvpn_executable, openvpn_config, openvpn_executable, sleep_time_secs)
 else:
-	main()
+	main (openvpn_executable, openvpn_config, openvpn_executable)
