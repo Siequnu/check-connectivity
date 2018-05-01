@@ -4,6 +4,7 @@ import shlex
 import time
 import sys
 import arrow
+import 
 
 # Global variables
 LAST_VPN_RESTART = False
@@ -40,11 +41,13 @@ def main (sleep_time_secs = 20):
 		else:
 			print ('Internet is up.')
 			if LAST_VPN_RESTART:
-				print ('Last VPN restart was ' + str(LAST_VPN_RESTART.humanize()) + ' , at: ' + str(LAST_VPN_RESTART))
+				print ('Last VPN restart was ' + str(LAST_VPN_RESTART.humanize()) + ', at: ' + str(LAST_VPN_RESTART.format('YYYY-MM-DD HH:mm:ss')))
 		time.sleep (sleep_time_secs)
 
-# Get sleep time argument, if present in arguments
+# Main program start
 print ('Starting connectivity manager...')
+
+# Get sleep time argument, if present in arguments
 if len(sys.argv) > 1:
 	sleep_time_secs = sys.argv[1]
 	print ('Setting sleep time as ' + str(sleep_time_secs))
