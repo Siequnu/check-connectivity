@@ -78,6 +78,6 @@ openvpn_authuserpass = arguments['<openvpn-authuserpass>']
 if '<sleep-time>' in arguments:
 	sleep_time_secs = arguments['<sleep-time>']
 	print colored ('Setting sleep time as ' + str(sleep_time_secs), 'yellow')
-	main (openvpn_executable, openvpn_config, openvpn_executable, sleep_time_secs)
+	main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_secs)
 else:
-	main (openvpn_executable, openvpn_config, openvpn_executable)
+	main (openvpn_executable, openvpn_config, openvpn_authuserpass)
