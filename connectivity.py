@@ -25,11 +25,11 @@ def main (sleep_time_secs = 20):
 	
 	while True:
 		if check_connectivity () == False:
-			print colored ('Internet is down... killing any existing OpenVPN process.', 'yellow')
-			
 			# killall OpenVPN
-			print str(subprocess.Popen(['sudo', 'killall', 'openvpn']))
+			print colored ('Internet is down... killing any existing OpenVPN process.', 'yellow')
+			killall = subprocess.Popen(['sudo', 'killall', 'openvpn'])
 			time.sleep(10)
+			print str(killall)
 			print colored ('Restarting the OpenVPN process...', 'yellow')
 			
 			# Restart OpenVPN client
