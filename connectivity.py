@@ -68,7 +68,7 @@ def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_s
 
 
 # Main program start
-arguments = docopt(__doc__, version='OpenVPN Connectivity Manager 1.0')
+arguments = docopt(__doc__, version='OpenVPN Connectivity Manager 1.01')
 print colored ('Starting OpenVPN Connectivity Manager...', 'yellow')
 
 # Assign arguments
@@ -76,7 +76,7 @@ openvpn_executable = arguments['<openvpn-executable>']
 openvpn_config = arguments['<openvpn-config>']
 openvpn_authuserpass = arguments['<openvpn-authuserpass>']
 if '<sleep-time>' in arguments:
-	sleep_time_secs = arguments['<sleep-time>']
+	sleep_time_secs = int(arguments['<sleep-time>'])
 	print colored ('Setting sleep time as ' + str(sleep_time_secs), 'yellow')
 	main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_secs)
 else:
