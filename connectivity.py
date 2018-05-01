@@ -35,7 +35,7 @@ def check_connectivity ():
 	return get_return_code(cmd) == 0
 
 # Main entrance to program
-def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_secs = 20):
+def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_secs = 600):
 	global LAST_VPN_RESTART
 	
 	while True:
