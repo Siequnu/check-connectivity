@@ -34,14 +34,14 @@ $ python connectivity.py /usr/sbin/openvpn /etc/openvpn/vpn.conf /etc/openvpn/au
 
 The script accepts the following command line arguments:
 
-* **<openvpn-executable>**: relative path to the OpenVPN executable.
-* **<openvpn-config>**: relative path to the OpenVPN configuration file.
-* **<openvpn-authuserpass>**: relative path to the OpenVPN password file. This is necessary to automate
+* **openvpn-executable**: relative path to the OpenVPN executable.
+* **openvpn-config**: relative path to the OpenVPN configuration file.
+* **openvpn-authuserpass**: relative path to the OpenVPN password file. This is necessary to automate
 	the reconnection if prompted for username and password.
 
 The following optional arguments may be given:
 
-* **--s <sleep-time>**: the sleep time between checking internet status. Sending `--s 20`
+* **--s sleep-time**: the sleep time between checking internet status. Sending `--s 20`
 	will ping the internet once every 20 seconds. The default value (if not set) is 600 seconds.
 	
 * **-v**: show the version number.
