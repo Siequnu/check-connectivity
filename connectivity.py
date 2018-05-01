@@ -36,7 +36,7 @@ def main (sleep_time_secs = 20):
 			subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
 							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
 							 '/etc/openvpn/auth.txt'])
-			time.sleep (15)
+			time.sleep (60)
 			
 			# Check restart was successful
 			if check_connectivity() == True:
@@ -44,7 +44,7 @@ def main (sleep_time_secs = 20):
 				LAST_VPN_RESTART = arrow.now()
 			else:
 				print colored ('OpenVPN did not successfully restart!', 'red')
-				print colored ('Sleeping for ' + str(sleep_time_secs) + 'seconds.', 'yellow')
+				print colored ('Sleeping for ' + str(sleep_time_secs) + ' seconds.', 'yellow')
 		else:
 			print colored ('Internet is up.', 'yellow')
 			if LAST_VPN_RESTART:
