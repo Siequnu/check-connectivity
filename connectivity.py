@@ -4,7 +4,7 @@ import shlex
 import time
 import sys
 import arrow
-import 
+from termcolor import colored
 
 # Global variables
 LAST_VPN_RESTART = False
@@ -25,32 +25,32 @@ def main (sleep_time_secs = 20):
 	
 	while True:
 		if check_connectivity () == False:
-			print ('Internet is down... killing any existing OpenVPN process.')
+			print colored ('Internet is down... killing any existing OpenVPN process.', 'yellow')
 			# killall OpenVPN
 			proc = subprocess.Popen(['sudo', 'killall', 'openvpn'])
 			time.sleep(10)
 			print (str(proc))
-			print ('Restarting the OpenVPN process...')
+			print colored ('Restarting the OpenVPN process...', 'yellow')
 			# Restart OpenVPN client
 			proc = subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
 							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
 							 '/etc/openvpn/auth.txt'])
 			print (str(proc))
-			print ('OpenVPN restarted successfully!')
+			print colored ('OpenVPN restarted successfully!', 'yellow')
 			LAST_VPN_RESTART = arrow.now()
 		else:
-			print ('Internet is up.')
+			print colored ('Internet is up.', 'yellow')
 			if LAST_VPN_RESTART:
-				print ('Last VPN restart was ' + str(LAST_VPN_RESTART.humanize()) + ', at: ' + str(LAST_VPN_RESTART.format('YYYY-MM-DD HH:mm:ss')))
+				print colored ('Last VPN restart was ' + str(LAST_VPN_RESTART.humanize()) + ', at: ' + str(LAST_VPN_RESTART.format('YYYY-MM-DD HH:mm:ss')), 'yellow')
 		time.sleep (sleep_time_secs)
 
 # Main program start
-print ('Starting connectivity manager...')
+print colored ('Starting connectivity manager...', 'yellow')
 
 # Get sleep time argument, if present in arguments
 if len(sys.argv) > 1:
 	sleep_time_secs = sys.argv[1]
-	print ('Setting sleep time as ' + str(sleep_time_secs))
+	print colored ('Setting sleep time as ' + str(sleep_time_secs), 'yellow')
 	main (int(sleep_time_secs))
 else:
 	main()
