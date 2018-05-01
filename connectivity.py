@@ -27,15 +27,15 @@ def main (sleep_time_secs = 20):
 		if check_connectivity () == False:
 			# killall OpenVPN
 			print colored ('Internet is down... killing any existing OpenVPN process.', 'yellow')
-			killall = subprocess.Popen(['sudo', 'killall', 'openvpn'])
+			subprocess.Popen(['sudo', 'killall', 'openvpn'])
 			time.sleep(10)
-			print str(killall)
-			print colored ('Restarting the OpenVPN process...', 'yellow')
+			
 			
 			# Restart OpenVPN client
-			print (str(subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
+			print colored ('Restarting the OpenVPN process...', 'yellow')
+			subprocess.Popen(['sudo','/usr/sbin/openvpn','--config',
 							 '/etc/openvpn/us15udp.conf', '--auth-user-pass',
-							 '/etc/openvpn/auth.txt'])))
+							 '/etc/openvpn/auth.txt'])
 			time.sleep (15)
 			
 			# Check restart was successful
