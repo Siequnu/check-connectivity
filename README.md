@@ -30,7 +30,7 @@ A general use case might be:
 $ python connectivity.py /usr/sbin/openvpn /etc/openvpn/vpn.conf /etc/openvpn/auth.txt --s 40
 ```
 
-## Usage
+## Config
 
 The script accepts the following command line arguments:
 
@@ -45,6 +45,8 @@ The following optional arguments may be given:
 	will ping the internet once every 20 seconds. The default value (if not set) is 600 seconds.
 	
 * **-v**: show the version number.
+
+* **-h**: show the manual page.
 
 
 ## Dependencies
