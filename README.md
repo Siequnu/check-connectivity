@@ -27,7 +27,7 @@ $ python connectivity.py <openvpn-executable> <openvpn-config> <openvpn-authuser
 A general use case might be:
 
 ```sh
-$ python connectivity.py /usr/sbin/openvpn /etc/openvpn/vpn.conf /etc/openvpn/auth.txt --s 40
+$ python connectivity.py /usr/sbin/openvpn /etc/openvpn/servers.txt /etc/openvpn/auth.txt --s 40
 ```
 
 ## Config
@@ -35,7 +35,7 @@ $ python connectivity.py /usr/sbin/openvpn /etc/openvpn/vpn.conf /etc/openvpn/au
 The script accepts the following command line arguments:
 
 * **openvpn-executable**: relative path to the OpenVPN executable.
-* **openvpn-config**: relative path to the OpenVPN configuration file.
+* **openvpn-config**: relative path to a .txt list of OpenVPN configuration paths.
 * **openvpn-authuserpass**: relative path to the OpenVPN password file. This is necessary to automate
 	the reconnection if prompted for username and password.
 

@@ -20,6 +20,7 @@ import time
 import sys
 import arrow
 from termcolor import colored
+import random
 
 # Global variables
 LAST_VPN_RESTART = False
@@ -31,8 +32,20 @@ def get_return_code (cmd, stderr=STDOUT):
 	
 # Run a ping check and return exit code
 def check_connectivity ():
-	cmd = 'ping -c 1 8.8.8.8'
+	cmd = 'ping -c 1 172.217.160.78' # Google.com IP
 	return get_return_code(cmd) == 0
+
+# Get a master list of working servers
+def get_server_list (openvpn_config):
+	with open(openvpn_config) as f:
+		content = f.readlines()
+		content = [x.strip() for x in content]
+		return content
+		
+def get_random_server (openvpn_config):
+	servers = get_server_list(openvpn_config)
+	return random.choice(servers)
+	
 
 # Main entrance to program
 def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_secs = 600):
@@ -43,14 +56,17 @@ def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_s
 			# killall OpenVPN
 			print colored ('Internet is down... killing any existing OpenVPN process.', 'yellow')
 			subprocess.Popen(['sudo', 'killall', 'openvpn'])
-			time.sleep(10)
+			time.sleep(5)
 			
+			# Get random server from config list
+			random_config = get_random_server(openvpn_config)
+			print colored ('Connecting to ' + random_config + '...', 'blue')
 			
 			# Restart OpenVPN client
 			print colored ('Restarting the OpenVPN process...', 'yellow')
 			subprocess.Popen(['sudo',openvpn_executable,'--config',
-							 openvpn_config, '--auth-user-pass',
-							 openvpn_authuserpass])
+							 random_config, '--auth-user-pass',
+							 openvpn_authuserpass])				 
 			time.sleep (60)
 			
 			# Check restart was successful
@@ -68,7 +84,7 @@ def main (openvpn_executable, openvpn_config, openvpn_authuserpass, sleep_time_s
 
 
 # Main program start
-arguments = docopt(__doc__, version='OpenVPN Connectivity Manager 1.01')
+arguments = docopt(__doc__, version='OpenVPN Connectivity Manager 2.0')
 print colored ('Starting OpenVPN Connectivity Manager...', 'yellow')
 
 # Assign arguments
